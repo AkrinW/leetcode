@@ -13,10 +13,11 @@ int main() {
     nums[3] = 99;
     int n = nums.size();
     int k = 2;
-    int count = std::gcd(k, n);
+    int count = 2;
+    // int count = std::gcd(k, n);
     int tmp;
     if (n == 1) {
-        return;
+        return 0;
     }
     while (k >= n) {
         k -= n;
