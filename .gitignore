@@ -6,4 +6,5 @@
 /build/
 /hello.exe
 *.exe
+/test.cpp
 test.cpp
