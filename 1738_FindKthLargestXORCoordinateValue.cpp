@@ -13,6 +13,12 @@
 #include <functional>
 using namespace std;
 
+//优化cin 和cout 速度
+auto __FAST__IO__ = []() noexcept -> int {
+    cin.tie(nullptr)->ios::sync_with_stdio(false);
+    return 0;
+}();
+
 class Solution {
 public:
     int kthLargestValue(vector<vector<int>>& matrix, int k) {
@@ -48,6 +54,13 @@ public:
         };
         // priority_queue<int> que;
         // que.push(matrix[0][0]);
+        // 用优先级队列的写法。控制堆大小即可
+        // if (minHeap.size() < k) {
+        //     minHeap.push(s[i][j]);
+        // } else if (s[i][j] > minHeap.top()) {
+        //     minHeap.pop();
+        //     minHeap.push(s[i][j]);
+        // }
         push(matrix[0][0]);
         int m = matrix.size();
         int n = matrix[0].size();
@@ -79,6 +92,9 @@ public:
         return que[1];
     }
 };
+
+
+
 
 int main() {
     return 0;
