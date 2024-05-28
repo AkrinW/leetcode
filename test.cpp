@@ -24,7 +24,6 @@ auto __FAST__IO__ = []() noexcept -> int {
 class Solution {
 public:
 
-
 };
 
 int main() {
