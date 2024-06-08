@@ -13,6 +13,7 @@
 #include <array>
 #include <cctype>
 #include <functional>
+#include <ranges>
 using namespace std;
 
 //优化cin 和cout 速度
@@ -33,6 +34,16 @@ isdigit
 std::array<int, 5> ar;
 double density(double, double);
 
+
+        function<int(int, int, int)> dfs = [&](int x, int fa, int sum) -> int {
+            int cnt = sum % signalSpeed == 0;
+            for (auto &[y, wt] : g[x]) {
+                if (y != fa) {
+                    cnt += dfs(y, x, sum + wt);
+                }
+            }
+            return cnt;
+        };
 
 
 using namespace std;
