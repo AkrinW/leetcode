@@ -5,7 +5,36 @@
 #include <unordered_map>
 #include <queue>
 #include <algorithm>
+using namespace std;
+// 6.15 rewrite.
+class Solution {
+public:
+    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> capHeap;
+        priority_queue<int, vector<int>, less<int>> proHeap;
+        int n = profits.size();
+        for (int i = 0; i < n; ++i) {
+            capHeap.push({capital[i],i});
+        }
+        int curw = w;
+        for (int i = 0; i < k; ++i) {
+            while (!capHeap.empty() && curw >= capHeap.top().first) {
+                int sub = capHeap.top().second;
+                proHeap.push(profits[sub]);
+                capHeap.pop();
+            }
+            if (proHeap.empty()) {
+                break;
+            }
+            int pro = proHeap.top();
+            proHeap.pop();
+            curw += pro;
+        }
+        return curw;
+    }
+};
 
+//5.15 write
 class Solution {
 public:
     int findMaximizedCapital(int k, int w, std::vector<int>& profits, std::vector<int>& capital) {
