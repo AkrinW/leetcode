@@ -7,7 +7,38 @@
 #include <algorithm>
 #include <cstdint>
 #include <cmath>
+using namespace std;
+// 6.18 rewrite
+class Solution {
+public:
+    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+        sort(worker.begin(), worker.end());
+        std::vector<pair<int, int>> pair;
+        int n = difficulty.size();
+        for (int i = 0; i < n; ++i) {
+            pair.push_back({difficulty[i], profit[i]});
+        }
+        sort(pair.begin(), pair.end());
+        int max = 0;
+        int submax = 0;
+        int i = 0;
+        for (auto u: worker) {
+            while (i < n) {
+                if (pair[i].first > u) {
+                    break;
+                } else {
+                    submax = submax > pair[i].second ? submax : pair[i].second;
+                    ++i;
+                }
+            }
+            max += submax;
+        }
+        return max;
+    }
+};
 
+
+// 5.17 write
 class Solution {
 private:
 void merge(std::vector<int>& arr, int left, int mid, int right, std::vector<int>& profit) {
