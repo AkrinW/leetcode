@@ -26,6 +26,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+
 // Definition for singly-linked list.
 struct ListNode {
     int val;
@@ -43,63 +44,27 @@ auto __FAST__IO__ = []() noexcept -> int {
 
 class Solution {
 public:
-
-};
-
-int main() {
-    return 0;
-}
-isdigit
-std::array<int, 5> ar;
-double density(double, double);
-
-
-        function<int(int, int, int)> dfs = [&](int x, int fa, int sum) -> int {
-            int cnt = sum % signalSpeed == 0;
-            for (auto &[y, wt] : g[x]) {
-                if (y != fa) {
-                    cnt += dfs(y, x, sum + wt);
-                }
+    ListNode* mergeNodes(ListNode* head) {
+        ListNode* p = head;
+        ListNode* q = head;
+        int tmp = 0;
+        while (p != nullptr) {
+            p = p->next;
+            if (p == nullptr) {
+                break;
             }
-            return cnt;
-        };
-
-
-using namespace std;
-
-struct A {
-    A a;
+            while (p->val != 0) {
+                tmp += p->val;
+                p = p->next;
+            }
+            q->next = new ListNode(tmp);
+            tmp = 0;
+            q = q->next;
+        }
+        return head->next;
+    }
 };
-
-struct B {
-    C c;
-};
-
-struct C {
-    B b;
-};
-
-union a {
-    int a_num;
-    std::string a_string;
-};
-
-// anonymous union
-struct A {
-    union {
-        int num;
-        std::string str;
-    };
-};
-
-enum {
-    red,orange,yellow,green,blue,violet
-};
-
 
 int main() {
-    cout << 1 << endl;
-    int p[6] {0,0};
-    double c = density()
     return 0;
 }
