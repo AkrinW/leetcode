@@ -48,60 +48,38 @@ public:
 
 };
 
+class DiningPhilosophers {
+private:
+    std::mutex mtx;
+    std::condition_variable cv;
+    bool fork[5] = {true, true, true, true, true};
+public:
+    DiningPhilosophers() {
+        
+    }
+
+    void wantsToEat(int philosopher,
+                    function<void()> pickLeftFork,
+                    function<void()> pickRightFork,
+                    function<void()> eat,
+                    function<void()> putLeftFork,
+                    function<void()> putRightFork) {
+        std::unique_lock<mutex> lock(mtx);
+        cv.wait(lock, [&]{return fork[philosopher] && fork[(philosopher+1) % 5];});
+        fork[philosopher] = false;
+        pickLeftFork();
+        fork[(philosopher+1)%5] = false; 
+        pickRightFork();
+        eat();
+        fork[philosopher] = true;
+        putLeftFork();
+        fork[(philosopher+1) % 5] = true;
+        putRightFork();
+        cv.notify_all();
+    }
+};
+
+
 int main() {
     return 0;
 }
-// isdigit
-// std::array<int, 5> ar;
-// double density(double, double);
-
-
-//         function<int(int, int, int)> dfs = [&](int x, int fa, int sum) -> int {
-//             int cnt = sum % signalSpeed == 0;
-//             for (auto &[y, wt] : g[x]) {
-//                 if (y != fa) {
-//                     cnt += dfs(y, x, sum + wt);
-//                 }
-//             }
-//             return cnt;
-//         };
-
-
-// using namespace std;
-
-// struct A {
-//     A a;
-// };
-
-// struct B {
-//     C c;
-// };
-
-// struct C {
-//     B b;
-// };
-
-// union a {
-//     int a_num;
-//     std::string a_string;
-// };
-
-// // anonymous union
-// struct A {
-//     union {
-//         int num;
-//         std::string str;
-//     };
-// };
-
-// enum {
-//     red,orange,yellow,green,blue,violet
-// };
-
-
-// int main() {
-//     cout << 1 << endl;
-//     int p[6] {0,0};
-//     double c = density()
-//     return 0;
-// }

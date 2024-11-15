@@ -43,65 +43,44 @@ auto __FAST__IO__ = []() noexcept -> int {
     return 0;
 }();
 
-class Solution {
+class H2O {
+private:
+    std::mutex mtx;
+    std::condition_variable cv;
+    int numH = 0, numO = 0;
 public:
+    H2O() {
+        
+    }
 
+    void hydrogen(function<void()> releaseHydrogen) {
+        std::unique_lock<std::mutex> lock(mtx);
+        cv.wait(lock, [this]{return numH < 2;});
+        // releaseHydrogen() outputs "H". Do not change or remove this line.
+        releaseHydrogen();
+        ++numH;
+        if (numH == 2 && numO == 1) {
+            numH = 0;
+            numO = 0;
+            cv.notify_all();
+        }
+    }
+
+    void oxygen(function<void()> releaseOxygen) {
+        std::unique_lock<std::mutex> lock(mtx);
+        cv.wait(lock,[this]{return numO == 0;});
+        // releaseOxygen() outputs "O". Do not change or remove this line.
+        releaseOxygen();
+        ++numO;
+        if (numH == 2 && numO == 1) {
+            numH = 0;
+            numO = 0;
+            cv.notify_all();
+        }
+    }
 };
+
 
 int main() {
     return 0;
 }
-// isdigit
-// std::array<int, 5> ar;
-// double density(double, double);
-
-
-//         function<int(int, int, int)> dfs = [&](int x, int fa, int sum) -> int {
-//             int cnt = sum % signalSpeed == 0;
-//             for (auto &[y, wt] : g[x]) {
-//                 if (y != fa) {
-//                     cnt += dfs(y, x, sum + wt);
-//                 }
-//             }
-//             return cnt;
-//         };
-
-
-// using namespace std;
-
-// struct A {
-//     A a;
-// };
-
-// struct B {
-//     C c;
-// };
-
-// struct C {
-//     B b;
-// };
-
-// union a {
-//     int a_num;
-//     std::string a_string;
-// };
-
-// // anonymous union
-// struct A {
-//     union {
-//         int num;
-//         std::string str;
-//     };
-// };
-
-// enum {
-//     red,orange,yellow,green,blue,violet
-// };
-
-
-// int main() {
-//     cout << 1 << endl;
-//     int p[6] {0,0};
-//     double c = density()
-//     return 0;
-// }

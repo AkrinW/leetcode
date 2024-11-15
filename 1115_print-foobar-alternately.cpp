@@ -43,65 +43,43 @@ auto __FAST__IO__ = []() noexcept -> int {
     return 0;
 }();
 
-class Solution {
+class FooBar {
+private:
+    int n;
+    std::mutex m1, m2;
+    std::condition_variable cv;
+    bool flag;
 public:
+    FooBar(int n) {
+        flag = true;
+        this->n = n;
+    }
 
+    void foo(function<void()> printFoo) {
+        
+        for (int i = 0; i < n; i++) {
+            std::unique_lock<mutex> lock(m1);
+            cv.wait(lock, [this]{return flag;});
+        	// printFoo() outputs "foo". Do not change or remove this line.
+        	printFoo();
+            flag = false;
+            cv.notify_one();
+        }
+    }
+
+    void bar(function<void()> printBar) {
+        
+        for (int i = 0; i < n; i++) {
+            std::unique_lock<mutex> lock(m2);
+            cv.wait(lock, [this]{return !flag;});
+        	// printBar() outputs "bar". Do not change or remove this line.
+        	printBar();
+            flag = true;
+            cv.notify_one();
+        }
+    }
 };
 
 int main() {
     return 0;
 }
-// isdigit
-// std::array<int, 5> ar;
-// double density(double, double);
-
-
-//         function<int(int, int, int)> dfs = [&](int x, int fa, int sum) -> int {
-//             int cnt = sum % signalSpeed == 0;
-//             for (auto &[y, wt] : g[x]) {
-//                 if (y != fa) {
-//                     cnt += dfs(y, x, sum + wt);
-//                 }
-//             }
-//             return cnt;
-//         };
-
-
-// using namespace std;
-
-// struct A {
-//     A a;
-// };
-
-// struct B {
-//     C c;
-// };
-
-// struct C {
-//     B b;
-// };
-
-// union a {
-//     int a_num;
-//     std::string a_string;
-// };
-
-// // anonymous union
-// struct A {
-//     union {
-//         int num;
-//         std::string str;
-//     };
-// };
-
-// enum {
-//     red,orange,yellow,green,blue,violet
-// };
-
-
-// int main() {
-//     cout << 1 << endl;
-//     int p[6] {0,0};
-//     double c = density()
-//     return 0;
-// }
